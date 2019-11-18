@@ -1,0 +1,166 @@
+# 30-day Evaluation License Keys
+#
+#
+# Linux:  English Core Product Keys
+# ---------------------------------
+#
+# File: LKLinux-Core_17-Dec-2019.lic
+FEATURE lklce steeleye 1.003 17-dec-2019 uncounted HOSTID=ANY \
+	SIGN="00A0 8E57 C7F9 6C58 07C5 A34B E708 C000 A3EA 9738 05F1 \
+	247B 6156 9A71 85A9"
+#
+# Linux:  Japanese Core Product Keys
+# ----------------------------------
+#
+# File: LKLinux-Japan-6.x_17-Dec-2019.lic
+FEATURE lklce_ja steeleye 1.003 17-dec-2019 uncounted HOSTID=ANY \
+	SIGN="00E4 3217 E823 720D 8BA6 6035 36B8 8400 B603 42F9 4ACA \
+	D731 AA65 1F84 34F2"
+#
+# Linux:  Recovery Kit Keys
+# -------------------------
+#
+# File: apache_17-Dec-2019.lic
+FEATURE lklce_webserver_apache steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="0022 67EB 0475 0B3C 453E 9D70 72D8 FE00 9570 \
+	54E6 01D4 5D8F 1D2D 4A94 9E0F"
+#
+# File: DB2_17-Dec-2019.lic
+FEATURE lklce_database_db2 steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="00FC D9DC 580F 4103 9219 3BF5 C027 7100 0124 \
+	8BBB 2A18 33F9 B37F 2CED 60FD"
+#
+# File: dmmp_17-Dec-2019.lic
+FEATURE lklce_scsi_dmmp steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="00F8 AD35 7191 58A5 2792 3219 5072 B800 5921 \
+	950C 15F0 FF02 0DAC E739 94F2"
+FEATURE lklce_scsi_dmmpp steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="00ED 2065 11DA C93C 386E B912 6E03 3900 6BC0 \
+	1563 49FB F132 9C9E 1733 3D87"
+#
+# File: hdlm_17-Dec-2019.lic
+FEATURE lklce_scsi_hdlm steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="0095 3B20 6EAC 97DA 0AAD F6D0 9ED3 5500 5ED4 \
+	7A05 A1AD 9F21 D23E 9C77 E62A"
+FEATURE lklce_scsi_hdlmp steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="0039 0F4F 9837 0D5B 25B1 6ECD 5561 0C00 9F21 \
+	7463 2F54 7CE8 1957 F738 74E4"
+#
+# File: lvm_17-Dec-2019.lic
+FEATURE lklce_scsi_lvmvg steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="00FF 1DFB F42C 5677 B8F4 0CF9 E27F 3A00 D4B7 \
+	E81A BFDE 4422 18E7 A32A A8A7"
+FEATURE lklce_scsi_lvmlv steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="0082 D1A4 99C2 1B52 7320 74D5 FB66 8B00 6842 \
+	629F D2AD ACED 1E0A 3276 6299"
+#
+# File: md_17-Dec-2019.lic
+FEATURE lklce_scsi_md steeleye 1.003 17-dec-2019 uncounted HOSTID=ANY \
+	SIGN="0051 BEFC B89A C32F 64BD 0ECE A84D 6400 0E8A 4C64 9D13 \
+	CF04 FDFF 1CE2 60C4"
+FEATURE lklce_scsi_mdComponent steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="007C FF35 059F 7512 E0D3 2706 094F A500 4F66 \
+	ADB5 46C5 C88B F9BA C6D7 875F"
+#
+# File: mqseries_17-Dec-2019.lic
+FEATURE lklce_appsuite_mqseries steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="004D F06C 9952 1303 057E C4E9 B97A 0800 9719 \
+	B6F9 6CFD 7BCF 3A02 EBFE AF81"
+#
+# File: mysql_17-Dec-2019.lic
+FEATURE lklce_database_mysql steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="00B2 BE5C 81BA CC78 3B9E E209 051A 6C00 DD2A \
+	6257 36C3 B08B 484D 42F2 27C1"
+#
+# File: nas_17-Dec-2019.lic
+FEATURE lklce_scsi_netstorage steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="007B 5123 5513 E7C1 BD7F D2E2 43FD 5100 157F \
+	2E47 DCB9 1DA9 15D9 38B8 60C7"
+#
+# File: nfs_17-Dec-2019.lic
+FEATURE lklce_gen_nfs steeleye 1.003 17-dec-2019 uncounted HOSTID=ANY \
+	SIGN="00CB 9E1D DB15 E800 DD48 4DAB E5A0 8400 2AB8 7AFD 8036 \
+	D59D F965 9D1D EA87"
+FEATURE lklce_gen_hanfs steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="0060 E1D7 BB0F 398A 6279 CC43 5288 BB00 E2CF \
+	FA89 A2EA 1E19 7A78 41EB A7F9"
+#
+# File: oracle_17-Dec-2019.lic
+FEATURE lklce_database_oracle steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="0015 C25F 938A 739D FE51 B112 2069 5800 C598 \
+	5FBF 1519 019C 0CFA 23C6 969B"
+FEATURE lklce_database_listener steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="008D C539 A13D FCB5 1B5C 3D44 59B7 2F00 BE0C \
+	EE1E 0836 82B4 F8DD F54A 50C3"
+#
+# File: postfix_17-Dec-2019.lic
+FEATURE lklce_mail_postfix steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="0096 4D88 9218 2C26 F5C4 CBFB BF45 AF00 5729 \
+	3FBE 2C74 A9BC 8334 7E33 FDC2"
+#
+# File: postgressql_17-Dec-2019.lic
+FEATURE lklce_database_pgsql steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="00E9 83C9 1055 8501 193E 30A7 16C3 B000 56B7 \
+	97FE 9026 FE1A 70D7 86DD CFC8"
+#
+# File: ppath_17-Dec-2019.lic
+FEATURE lklce_scsi_ppath steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="007F 1224 478B 0791 A24B C7E7 353C EF00 840C \
+	974C AC8E C4DB 936C 0690 91E9"
+FEATURE lklce_scsi_ppathp steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="00F5 CA6A 408F B710 1036 3A32 FE20 E900 AB8F \
+	3014 DEF2 A42F FBFC 1CED 10AB"
+#
+# File: quorum-disk_17-Dec-2019.lic
+FEATURE lklce_quorum_disk steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="00C9 28AA 6396 F0E2 E87C 68B7 39B5 EC00 AB3E \
+	8E55 76BF C5F9 CC4F 5DA3 A55B"
+#
+# File: replication_17-Dec-2019.lic
+FEATURE lklce_scsi_netraid steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="00F9 978B 023D 13D6 8700 7882 6558 9000 1E02 \
+	F7C8 2C8B 24AB 63E6 B85C 5A33"
+#
+# File: samba_17-Dec-2019.lic
+FEATURE lklce_gen_samba steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="005F AA70 8940 9BDA 18F2 1A33 5A28 6E00 4F04 \
+	2508 D601 6CF3 05A5 E05A 3D4D"
+#
+# File: sap_17-Dec-2019.lic
+FEATURE lklce_appsuite_sap steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="002D 060D D1E0 DE9A D991 FEA8 5E9D 2E00 6C12 \
+	A93C 45E6 BA82 E2EA 585C 0F8A"
+#
+# File: sapdb_17-Dec-2019.lic
+FEATURE lklce_database_sapdb steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="0097 9D20 682A CA6E 0B3D 803F 80FD A400 2627 \
+	2C39 0993 C773 263B B88A 5A32"
+#
+# File: sdd_17-Dec-2019.lic
+FEATURE lklce_scsi_sdd steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="0087 8333 ED9A 61A1 7627 7CD6 E715 A900 0D9C \
+	EDE1 A244 C291 F5F4 5751 C08E"
+FEATURE lklce_scsi_sddp steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="0003 26C0 1EDD D6D6 05D9 CC25 4459 1500 3AA6 \
+	263A 3631 9F14 183F 39C9 2102"
+#
+# File: sdrs_17-Dec-2019.lic
+FEATURE lklce_scsi_netraid steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="00F9 978B 023D 13D6 8700 7882 6558 9000 1E02 \
+	F7C8 2C8B 24AB 63E6 B85C 5A33"
+FEATURE lklce_scsi_disrec steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="00F2 8F2F ABF4 FA6D D588 A45E 3E2E 6400 23CB \
+	A4FF 0DF0 B26E C4BD FED5 B594"
+#
+# File: sps_17-Dec-2019.lic
+FEATURE lklce_scsi_sps steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="00D3 6C87 A68B 2610 340F EC0D 898A 5900 AF00 \
+	F4F2 C24F 1DC5 AB39 671D 56E6"
+FEATURE lklce_scsi_spsp steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="000D B8D5 4506 1357 D678 8B05 D305 CA00 C7B4 \
+	6519 FD14 4533 26C7 1CCF 4CAE"
+#
+# File: sybase_17-Dec-2019.lic
+FEATURE lklce_database_sybase steeleye 1.003 17-dec-2019 uncounted \
+	HOSTID=ANY SIGN="007B A0FF 755F 63AB 2FC5 FC84 3B4B 4600 B2D8 \
+	9CC6 D8CE 5CA7 C743 4EDC A70A"
