@@ -1,0 +1,135 @@
+node('master') {
+
+  def defaultNamespace = readFile('/var/run/secrets/kubernetes.io/serviceaccount/namespace').trim()
+
+  env.IMAGE_NAMESPACE = "$SCANNER_IMAGE_NAMESPACE".trim() != "" ? "$SCANNER_IMAGE_NAMESPACE" : defaultNamespace
+
+  env.IMAGE_SIGN_SCANNING_IMAGE = sh (
+      script: """
+        set +x
+        oc get is $SCANNER_IMAGE_NAME -n ${env.IMAGE_NAMESPACE} -o jsonpath='{ .status.dockerImageRepository }'
+        
+        """,
+      returnStdout: true
+  ).trim()
+}
+podTemplate(
+    label: 'image-sign-scan-base-slave', 
+    cloud: 'openshift', 
+    serviceAccount: "$SERVICE_ACCOUNT", 
+    containers: [
+        containerTemplate(
+            name: 'image-sign-scan-base', 
+            image: "${env.IMAGE_SIGN_SCANNING_IMAGE}", 
+            ttyEnabled: true, 
+            privileged: true, 
+            alwaysPullImage: true , 
+            workingDir: '/tmp' , 
+            command: 'cat', 
+            resourceRequestMemory: '1Gi'
+        ),
+        containerTemplate(
+            name: 'jnlp', 
+            image: 'docker-registry-central.app.rizad.acom.co.jp:5000/openshift3/jenkins-slave-base-rhel7:latest', 
+            privileged: true, 
+            workingDir: '/tmp' , 
+            args: '${computer.jnlpmac} ${computer.name}'
+        ),
+        containerTemplate(
+            name: 'proxy', 
+            image: 'docker-registry-central.app.rizad.acom.co.jp:5000/rhscl/httpd-24-rhel7-rootca:2.4', 
+            privileged: true, 
+            runAsUser: 0, 
+            alwaysPullImage: true , 
+            workingDir: '/tmp',
+            envVars: [
+                envVar(key: 'http_proxy', value: 'http://10.205.147.212:3128'),
+                envVar(key: 'https_proxy', value: 'http://10.205.147.212:3128')
+            ],
+        )
+    ],
+    volumes: [
+        hostPathVolume(
+            hostPath: '/var/run/docker.sock',
+            mountPath: '/var/run/docker.sock'
+        )
+    ]
+) 
+{
+
+  node('image-sign-scan-base-slave') {
+
+    container('proxy') {
+
+        stage('update scap scripts') {
+
+            image_result = sh(script: """
+            set +x 
+            curl https://www.redhat.com/security/data/metrics/ds/com.redhat.rhsa-RHEL7.ds.xml.bz2 -o /var/www/html/com.redhat.rhsa-RHEL7.ds.xml.bz2
+
+        """, returnStatus: true)
+
+        if(image_result != 0) {
+            currentBuild.result = 'FAILURE'
+            error("Update SCAP Failed!")
+        }
+
+        }
+    }
+
+    container('image-sign-scan-base') {
+    
+      stage('scan image') {
+        
+        env.OCP_TOKEN = sh(script: '''
+        oc login ${OCP_MASTER_URL} -u ${OCP_USER} -p ${OCP_PASSWORD} --insecure-skip-tls-verify &>> /dev/null
+        echo -n "${OCP_USER}:$(oc whoami -t)" |base64|tr -d "\n"
+        ''', returnStdout: true).trim()
+
+        image_result = sh(script: """
+        set +x
+        WORKING_DIR=\$(mktemp -d -t cve-scan-XXXXX)
+        IMAGE_CONTENT=\${WORKING_DIR}/image-content
+        RESULTS=/tmp/results
+        SCANNER_HOSTNAME=\$(uname -n)
+
+        echo \${OCP_TOKEN}
+        
+        mkdir /root/.docker
+        chmod 700 /root/.docker
+        echo '{"auths": {"${SRC_REGISTRY_URL}": {"auth": "${OCP_TOKEN}"}}}' > /root/.docker/config.json
+        chmod 600 /root/.docker/config.json
+
+        mkdir -p \$IMAGE_CONTENT
+
+        image-inspector --dockercfg /root/.docker/config.json --pull-policy=always --path=\${IMAGE_CONTENT} --scan-results-dir=\${RESULTS} --scan-type=openscap --image=$IMAGE_TO_SCAN --cve-url=http://localhost:8080/
+        
+        mv /tmp/results/* ${WORKSPACE}
+        oscap xccdf generate custom --stylesheet /usr/share/openscap/xsl/xccdf-report.xsl --output ${WORKSPACE}/results.html ${WORKSPACE}/results-arf.xml
+
+        sed -i "s|\${SCANNER_HOSTNAME}|$IMAGE_TO_SCAN|g" ${WORKSPACE}/results.html
+        
+        rm -rf \${WORKING_DIR}
+        set +e
+        grep "<result>fail</result>" ${WORKSPACE}/results-arf.xml
+
+        RESULT=\$?
+        
+        if [ \${RESULT} -ne 0 ]; then
+            exit 0
+        else
+            exit 1
+        fi
+        
+        """, returnStatus: true)
+  
+        archiveArtifacts(artifacts: 'results.html')
+        
+        if(image_result != 0) {
+            currentBuild.result = 'FAILURE'
+            error("Image Scanning Failed!")
+        }
+      }
+    }
+  }
+}
