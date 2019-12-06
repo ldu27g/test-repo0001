@@ -1,0 +1,82 @@
+podTemplate(
+    label: 'image-owasp-dependency-check-base-slave', 
+    cloud: 'openshift', 
+    serviceAccount: "$SERVICE_ACCOUNT", 
+    containers: [
+        containerTemplate(
+            name: 'image-owasp-dependency-check', 
+            image: "${env.IMAGE_OWASP_DEPENDENCY_CHECK_IMAGE}", 
+            ttyEnabled: true, 
+            privileged: true, 
+            alwaysPullImage: true , 
+            workingDir: '/tmp' , 
+            resourceRequestMemory: '1Gi'
+        ),
+        containerTemplate(
+            name: 'jnlp', 
+            image: 'docker-registry-central.app.rizad.acom.co.jp:5000/openshift3/jenkins-slave-base-rhel7:latest', 
+            privileged: true, 
+            workingDir: '/tmp' , 
+            args: '${computer.jnlpmac} ${computer.name}'
+        ),
+        containerTemplate(
+            name: 'proxy', 
+            image: 'docker-registry-central.app.rizad.acom.co.jp:5000/rhscl/httpd-24-rhel7-rootca:2.4', 
+            privileged: true, 
+            runAsUser: 0, 
+            alwaysPullImage: true , 
+            workingDir: '/tmp',
+            envVars: [
+                envVar(key: 'http_proxy', value: 'http://10.205.147.212:3128'),
+                envVar(key: 'https_proxy', value: 'http://10.205.147.212:3128')
+            ],
+        )
+    ]
+) 
+{
+
+  node('image-owasp-dependency-check-base-slave') {
+
+    container('image-owasp-dependency-check') {
+    
+      stage('owasp check dependency from java source') {
+        
+
+        git([
+            url: "${params.RIZA_PROJECT_GIT_REPO}",
+            branch: "${params.RIZA_PROJECT_GIT_REF}",
+            credentialsId: "${params.BUILD_PROJECT}-${params.GIT_SECRET}"
+        ])
+
+
+        image_result = sh(script: """
+        set +x
+        WORKING_DIR=\$(mktemp -d -t cve-scan-XXXXX)
+        IMAGE_CONTENT=\${WORKING_DIR}/image-content
+        RESULTS=/tmp/results
+        SCANNER_HOSTNAME=\$(uname -n)
+
+        ## git clone
+        git clone ${GIT_REPO} -b ${GIT_BRANCE} --depth 1
+
+        ## cd
+        cd ${GIT_REPO}
+
+        ## Proxy rootca => keystore
+        keytool -importcert -file /tmp/intecsecpsg01-rsa.cer -keystore cacerts -storepass changeit -noprompt
+
+        ## OWASP SCAN
+        /usr/share/dependency-check/bin/dependency-check.sh --project ${SCAN_PROJECT} --scan ./ --format "ALL" --out ${WORKSPACE}/ 
+
+        """, returnStatus: true)
+  
+        archiveArtifacts(artifacts: '*.html')
+        
+        if(image_result != 0) {
+            currentBuild.result = 'FAILURE'
+            error("Image Scanning Failed!")
+        }
+      }
+    }
+  }
+}
