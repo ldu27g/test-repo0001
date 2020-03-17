@@ -1,0 +1,61 @@
+---
+Instana-agent.yamlファイルの修正箇所
+
+1. Dynamic Docker Agentへの切り替え
+      containers:
+        - name: instana-agent
+          image: instana/agent
+          imagePullPolicy: Always
+
+2. リポジトリへのアクセスのためのProxy設定
+	次の環境設定を追記することで、設定内容が/opt/instana/agent/etc/mvn-settings.xmlに反映されます。
+	詳細については、Agent Proxy Settingsをご参照下さい。
+　　  
+
+            - name: INSTANA_AGENT_PROXY_HOST
+              value: ""
+            - name: INSTANA_AGENT_PROXY_PORT
+              value: ""
+            - name: INSTANA_AGENT_PROXY_PROTOCOL
+              value: ""
+            - name: INSTANA_AGENT_PROXY_USER
+              value: ""
+            - name: INSTANA_AGENT_PROXY_PASSWORD
+              value: ""
+            - name: INSTANA_AGENT_PROXY_USE_DNS
+              value: ""
+            - name: INSTANA_REPOSITORY_PROXY_ENABLED
+              value: "true"
+            - name: INSTANA_REPOSITORY_PROXY_HOST
+              value: "<Proxy Host or IP address>"
+            - name: INSTANA_REPOSITORY_PROXY_PORT
+              value: "<Port>"
+            - name: INSTANA_REPOSITORY_PROXY_PROTOCOL
+              value: "http"
+            - name: INSTANA_REPOSITORY_PROXY_USER
+              value: "<Username>"
+            - name: INSTANA_REPOSITORY_PROXY_PASSWORD
+              value: "<Password>"
+            - name: INSTANA_REPOSITORY_PROXY_USE_DNS
+              value: "<true or false>"
+
+3. Prometheus Sensorの有効化
+	ここでは、Agentの構成ファイル(configuration.yaml)への設定が記述できますので
+	Prometheus Configurationを参考に設定内容を追記して下さい。
+	data:
+  configuration.yaml: |
+    # Manual a-priori configuration. Configuration will be only used when the sensor
+    # is actually installed by the agent.
+    # The commented out example values represent example configuration and are not
+    # necessarily defaults. Defaults are usually 'absent' or mentioned separately.
+    # Changes are hot reloaded unless otherwise mentioned.
+    # …
+　＃(例) Static Prometheus Configuration
+    com.instana.plugin.prometheus:
+      customMetricSources:
+      - url: 'http://localhost:8080/metrics' # endpoint with exposed metrics
+        metricNameIncludeRegex: '^sample_app_request'
+
+補足：Static Docker Agentのイメージも更新され、こちらにもPrometheus Sensor 1.0.9が同梱されております。
+
+---
