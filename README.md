@@ -1,3 +1,26 @@
+
+
+■NTTD様うインフラ資料の確認
+全資料拝見しました。※こちらの資料はまだ全量では無いように見受けられました。
+拝見した範囲で気になった点を以下にご報告いたします。（※吹き出しにする程の内容ではないためこちらに記載させていただきます、）
+
+・「08_サーバ設計.pptx」- 「xx.コンテナインスタンスタイプ 」(2ページ目)
+「prometheusで監視するためprocess-exporterをインストールする」とありますが、exporterはPODではなくdaemonとして稼働させるのでしょうか？
+また、node-exporterによるリソース監視はprometheusでは行わないのでしょうか？
+
+・「14_可用性設計.pptx」
+ストレージとコンテナの可用性に関する記載がございますが、ノード障害に関する記載がございません。
+Multi-AZ構成に関する記載は別の章に記載されるのでしょうか？
+
+
+■構成図差分の確認
+Management/Data subnetを廃止してPrivate subnetに統一し、各コンポーネントの配置を変えたものと認識しました。
+以下、１点気になった点がございますので確認させてください。
+・各環境（本番含む）のEKSからNat Gateway経由でインターネットに抜ける経路が追加されていますが、この経路の用途は何でしょうか？
+　また、本番リリース後も存在する経路でしょうか？
+
+
+
 ```
 
 VM Name,Host,IP Addresses,Cores,Memory Capacity,Storage,CPU Usage,Memory Usage,Controller Read IOPS,Controller Write IOPS,Controller IO Bandwidth,Controller Avg IO Latency,Backup and Recovery Capable,Flash Mode
